@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/header.css" />
+	<link rel="stylesheet" href="fontIco/iconfont.css">
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+		
+		// 当设备启动就绪(使用h5+ API)
+		mui.plusReady(function(){
+			//设置设备状态栏背景色，plus表示设备，navigator用于管理浏览器运行环境信息. 
+			plus.navigator.setStatusBarBackground("#C9394A");
+			//设置状态栏字体样式为浅色调
+			plus.navigator.setStatusBarStyle("light");
+		})
+    </script>
+</head>
+<body>
+	<!-- 设置标题栏 -->
+	<header class="mui-bar mui-bar-nav title">
+		<h1 class="mui-title title-color"><b>IChat</b></h1>
+	</header>
+	
+	<!-- 设置底部tab -->
+	<nav class="mui-bar mui-bar-tab">
+		<a class="mui-tab-item mui-active" tabindex="0">
+			<span class="mui-icon iconfont icon-chat-bubble"></span>
+			<span class="mui-tab-label">聊天</span>
+		</a>
+		<a class="mui-tab-item" tabindex="1">
+			<span class="mui-icon iconfont icon-tongxunlu"></span>
+			<span class="mui-tab-label">通讯录</span>
+		</a>
+		<a class="mui-tab-item" tabindex="2">
+			<span class="mui-icon mui-icon-paperplane"></span>
+			<span class="mui-tab-label">发现</span>
+		</a>
+		<a class="mui-tab-item" tabindex="3">
+			<span class="mui-icon mui-icon-person" ></span>
+			<span class="mui-tab-label">我的</span>
+		</a>
+	</nav>
+	
+	<script type="text/javascript">
+		// 底部tab页面数组
+		var pageArray = [
+			{
+				pageId : "ichat-chat.html",
+				pageUrl : "ichat-chat.html"
+			},
+			{
+				pageId : "ichat-contact.html",
+				pageUrl : "ichat-contact.html"
+			},
+			{
+				pageId : "ichat-discover.html",
+				pageUrl : "ichat-discover.html"
+			},
+			{
+				pageId : "ichat-me.html",
+				pageUrl : "ichat-me.html"
+			}
+		];
+		
+		var pageStyle = {
+			top: "44px",
+			bottom: "50px"
+		}
+		
+		// 当设备就绪时,添加页面到tab
+		mui.plusReady(function(){
+			//重写返回方法,默认返回上级页面,此处禁止用户后退
+			mui.back = function(){
+				return false;
+			}
+			// 获取当前webview对象
+			var indexWebview = plus.webview.currentWebview();
+			//向当前主页webview追加子页4张webview对象
+			for (var i = 0; i < pageArray.length; i++) {
+				var page = plus.webview.create(pageArray[i].pageUrl,pageArray[i].pageId,pageStyle);
+				//隐藏webview窗口
+				page.hide();
+				//追加每个子页面到当前页面
+				indexWebview.append(page);
+			}
+			plus.webview.show(pageArray[0].pageId);
+			
+			// 批量绑定tap(手指单击事件),展示不同页面
+			mui(".mui-bar-tab").on("tap","a",function(){
+				var tabindex = this.getAttribute("tabindex");
+				// 显示点击tab对应页面,特效为fade-in,延迟时间200ms
+				plus.webview.show(pageArray[tabindex].pageId,"fade-in",200);
+				for (var i = 0; i < pageArray.length; i++) {
+					if(i != tabindex){
+						plus.webview.hide(pageArray[i].pageId,"fade-out",200);
+					}
+				}
+			})
+		})
+	</script>
+</body>
+</html>

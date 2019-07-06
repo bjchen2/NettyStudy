@@ -1,0 +1,25 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1559557975428'); /* IE9 */
+  src: url('iconfont.eot?t=1559557975428#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAOsAAsAAAAAB6AAAANeAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCfIJpATYCJAMMCwgABCAFhG0HQRu6BsguoRzbI+TNYCpsPKIAvi5XaMFyMcHz/Ni7c+97X0TTNsybSRKbuCdEpI7QrEOCKqYl7Pq133tfHDKNbfi3iLif7DuzPawzFyLVphMK0z1EnU5omN1WpEBLirYncE6Qi9j3k5WkATpk/rVEYHI9mMgBYYss8Ss9N5DU//97VTOPB2zebIvL+5ljWignFA4HKEBzd06yFqhA3EV2Z5AXdTME8FKkF7595+ImK2Cxlgkg/T2axAo5M7alVnAjOGv2WuQSAbee1nfgYvj78p+kAIrDYK3d1zmlstFf+JPNofkYPg7JdE5AOAQGWArDgjTWuqtJx+mlpPFq6kx7qROLoFPF5odQrGudG/3HUxAnVrUfgIVYpRclcQUQ+NMrUAAMAE7AA4zCuI3J8YAL9VuGgIt8XJixwNmbh294K2euHbre/Pq2V15fmL5kf8h4+2L7I08Pr2vOvMAcYqjdV8rdIfySaAOrfQMplf5rzkTgJk22ndlZzkeQANwvbE5UjoqV0pJ2TN12rr5PiS+f35AW5Xx4OFVuI2za5KmSBxges/+j5a3B8oO/z8XCdeXDLZuDak11dXhTaiS1iaIEZcfsXOo0r57t1z71Udxf/D5lm3f86NzH5OccOYtdV5jen2xZuuswxZx6fG9qI4xio0nEC+su6NMtc8XcrsuxDo5j+jx86YIpOi7NLPWwsBaa+/oPYIb1+9/6G37/E0LrL/gsAG+1VYVmC1zrvhePwL+RALusLrMsxqpiV2zmDPvI3zmGMVHDH6kHiPI1XJsAV4PgJpGC4qIABjcleEteCg58rAUnbjaBlyXMHPYRIySNWA+wmGsEQphHUII8AEOYD7wlf4KDJH/gJCxp8FIpsTN9lInh3TaKEqEKrTPQ0+a5wrFRKapdRy22pTArC6nbGEZGDFYtX1nMzaCL4RQbxia15vi4gM5Rz4Gd6HZo2x4Mj3omKlTtHie/f8WKzrpvqrYNOazENkIQCQJRAWQuAQwUPFyEP5golX5+HUQjxkYibOmoCW+DhEQYowMNqtQB+Bm1C+q4lddEnKHRhCAEgCDEwwGYRk7EttMegF8/ywRRIKroA5I+/dRILwFVV5fXOu93CPBiPdmIihGLZ3zI1S5i147Lbd0S9bVOyLKNjAEAAA==') format('woff2'),
+  url('iconfont.woff?t=1559557975428') format('woff'),
+  url('iconfont.ttf?t=1559557975428') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1559557975428#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tongxunlu:before {
+  content: "\e655";
+}
+
+.icon-chat-bubble:before {
+  content: "\e848";
+}
+
