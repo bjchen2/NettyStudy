@@ -20,7 +20,7 @@ public class HelloServer {
         try {
             //netty服务器启动类
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            //设置主从线程组、nio的双向通道、子处理器：用于处理workerGroup
+            //设置主从线程组、nio的双向通道、从通道初始化器：用于处理workerGroup
             serverBootstrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class)
                     .childHandler(new HelloServerInitializer());
 

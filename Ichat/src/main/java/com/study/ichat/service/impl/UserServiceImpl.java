@@ -1,13 +1,15 @@
 package com.study.ichat.service.impl;
 
+import com.study.ichat.enums.MsgActionEnum;
+import com.study.ichat.enums.MsgSignFlagEnum;
 import com.study.ichat.enums.SearchFriendsStatusEnum;
-import com.study.ichat.mapper.ChatMsgMapper;
-import com.study.ichat.mapper.FriendsRequestMapper;
-import com.study.ichat.mapper.MyFriendsMapper;
-import com.study.ichat.mapper.UsersMapper;
+import com.study.ichat.mapper.*;
+import com.study.ichat.pojo.ChatMsg;
 import com.study.ichat.pojo.FriendsRequest;
 import com.study.ichat.pojo.MyFriends;
 import com.study.ichat.pojo.Users;
+import com.study.ichat.pojo.vo.FriendRequestVO;
+import com.study.ichat.pojo.vo.MyFriendsVO;
 import com.study.ichat.service.UserService;
 import com.study.ichat.utils.MD5Utils;
 import com.study.ichat.utils.QRCodeUtils;
@@ -20,6 +22,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Cx
@@ -30,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UsersMapper userMapper;
+
+    @Autowired
+    private UsersMapperCustom usersMapperCustom;
 
     @Autowired
     private MyFriendsMapper myFriendsMapper;
@@ -172,29 +178,29 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
-//    @Override
-//    public List<FriendRequestVO> queryFriendRequestList(String acceptUserId) {
-//        return usersMapperCustom.queryFriendRequestList(acceptUserId);
-//    }
-//
-//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    @Override
-//    public void deleteFriendRequest(String sendUserId, String acceptUserId) {
-//        Example fre = new Example(FriendsRequest.class);
-//        Example.Criteria frc = fre.createCriteria();
-//        frc.andEqualTo("sendUserId", sendUserId);
-//        frc.andEqualTo("acceptUserId", acceptUserId);
-//        friendsRequestMapper.deleteByExample(fre);
-//    }
-//
-//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    @Override
-//    public void passFriendRequest(String sendUserId, String acceptUserId) {
-//        saveFriends(sendUserId, acceptUserId);
-//        saveFriends(acceptUserId, sendUserId);
-//        deleteFriendRequest(sendUserId, acceptUserId);
-//
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public List<FriendRequestVO> queryFriendRequestList(String acceptUserId) {
+        return usersMapperCustom.queryFriendRequestList(acceptUserId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Override
+    public void deleteFriendRequest(String sendUserId, String acceptUserId) {
+        Example fre = new Example(FriendsRequest.class);
+        Example.Criteria frc = fre.createCriteria();
+        frc.andEqualTo("sendUserId", sendUserId);
+        frc.andEqualTo("acceptUserId", acceptUserId);
+        friendsRequestMapper.deleteByExample(fre);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Override
+    public void passFriendRequest(String sendUserId, String acceptUserId) {
+        saveFriends(sendUserId, acceptUserId);
+        saveFriends(acceptUserId, sendUserId);
+        deleteFriendRequest(sendUserId, acceptUserId);
+
 //        Channel sendChannel = UserChannelRel.get(sendUserId);
 //        if (sendChannel != null) {
 //            // 使用websocket主动推送消息到请求发起者，更新他的通讯录列表为最新
@@ -203,25 +209,25 @@ public class UserServiceImpl implements UserService {
 //
 //            sendChannel.writeAndFlush(new TextWebSocketFrame(JsonUtils.objectToJson(dataContent)));
 //        }
-//    }
-//
-//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    private void saveFriends(String sendUserId, String acceptUserId) {
-//        MyFriends myFriends = new MyFriends();
-//        String recordId = sid.nextShort();
-//        myFriends.setId(recordId);
-//        myFriends.setMyFriendUserId(acceptUserId);
-//        myFriends.setMyUserId(sendUserId);
-//        myFriendsMapper.insert(myFriends);
-//    }
-//
-//    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
-//    @Override
-//    public List<MyFriendsVO> queryMyFriends(String userId) {
-//        List<MyFriendsVO> myFriends = usersMapperCustom.queryMyFriends(userId);
-//        return myFriends;
-//    }
-//
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void saveFriends(String sendUserId, String acceptUserId) {
+        MyFriends myFriends = new MyFriends();
+        String recordId = sid.nextShort();
+        myFriends.setId(recordId);
+        myFriends.setMyFriendUserId(acceptUserId);
+        myFriends.setMyUserId(sendUserId);
+        myFriendsMapper.insert(myFriends);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public List<MyFriendsVO> queryMyFriends(String userId) {
+        List<MyFriendsVO> myFriends = usersMapperCustom.queryMyFriends(userId);
+        return myFriends;
+    }
+
 //    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 //    @Override
 //    public String saveMsg(WsChatMsg wsChatMsg) {
@@ -239,22 +245,22 @@ public class UserServiceImpl implements UserService {
 //
 //        return msgId;
 //    }
-//
-//    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    @Override
-//    public void updateMsgSigned(List<String> msgIdList) {
-//        usersMapperCustom.batchUpdateMsgSigned(msgIdList);
-//    }
-//
-//    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
-//    @Override
-//    public List<ChatMsg> getUnReadMsgList(String acceptUserId) {
-//
-//        Example chatExample = new Example(ChatMsg.class);
-//        Example.Criteria chatCriteria = chatExample.createCriteria();
-//        chatCriteria.andEqualTo("signFlag", 0);
-//        chatCriteria.andEqualTo("acceptUserId", acceptUserId);
-//
-//        return chatMsgMapper.selectByExample(chatExample);
-//    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Override
+    public void updateMsgSigned(List<String> msgIdList) {
+        usersMapperCustom.batchUpdateMsgSigned(msgIdList);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public List<ChatMsg> getUnReadMsgList(String acceptUserId) {
+
+        Example chatExample = new Example(ChatMsg.class);
+        Example.Criteria chatCriteria = chatExample.createCriteria();
+        chatCriteria.andEqualTo("signFlag", 0);
+        chatCriteria.andEqualTo("acceptUserId", acceptUserId);
+
+        return chatMsgMapper.selectByExample(chatExample);
+    }
 }

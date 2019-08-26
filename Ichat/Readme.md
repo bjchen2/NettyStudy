@@ -1,0 +1,3 @@
+- 实体类和mybatis初始架构（即mapper包、pojo包、mapperxml包）使用mybatis-generator逆向工程生成(可直接使用imooc-muxin-mybatis项目生成，修改相应配置文件即可)
+  - 注意：xml生成是追加式的，所以，如果需要重新生成，需将以前生成的xml删除
+- 使用org.n3r.idworker包生成唯一主键（便于后期分布式拆表扩展），不用了解具体实现细节

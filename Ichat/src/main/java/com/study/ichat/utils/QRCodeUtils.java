@@ -14,26 +14,36 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
 
+/**
+ * 二维码相关工具类
+ * @author chenxiang
+ */
 @Component
 public class QRCodeUtils {
-	
+
+    /**
+     * 在指定位置生成二维码
+     * @param filePath 生成二维码位置
+     * @param content 二维码内容
+     */
 	public void createQRCode(String filePath, String content) {
-		int width=300;      		//图片的宽度
-        int height=300;     		//图片的高度
-        String format="png";    	//图片的格式
-//        String content="风间影月";     //内容
+        //图片的宽度
+		int width=300;
+        //图片的高度
+        int height=300;
+        //图片的格式
+        String format="png";
 
-        /**
-         * 定义二维码的参数
-         */
-        HashMap hints=new HashMap();
-        hints.put(EncodeHintType.CHARACTER_SET,"utf-8");    //指定字符编码为“utf-8”
-        hints.put(EncodeHintType.ERROR_CORRECTION,ErrorCorrectionLevel.M);  //指定二维码的纠错等级为中级
-        hints.put(EncodeHintType.MARGIN, 2);    //设置图片的边距
+        //定义二维码的参数
+        HashMap<EncodeHintType,Object> hints=new HashMap<>(4);
+        //指定字符编码为“utf-8”
+        hints.put(EncodeHintType.CHARACTER_SET,"utf-8");
+        //指定二维码的纠错等级为中级
+        hints.put(EncodeHintType.ERROR_CORRECTION,ErrorCorrectionLevel.M);
+        //设置图片的边距
+        hints.put(EncodeHintType.MARGIN, 2);
 
-        /**
-         * 生成二维码
-         */
+        //生成二维码
         try {
             BitMatrix bitMatrix=new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height,hints);
             Path file=new File(filePath).toPath();
@@ -42,7 +52,12 @@ public class QRCodeUtils {
             e.printStackTrace();
         }
 	}
-	
+
+    /**
+     * 获取二维码内容
+     * @param filePath 二维码文件路径
+     * @return 二维码内容
+     */
 	public String getContentFromQRCode(String filePath) {
 		MultiFormatReader formatReader=new MultiFormatReader();
         File file=new File(filePath);
@@ -51,8 +66,9 @@ public class QRCodeUtils {
             image = ImageIO.read(file);
             BinaryBitmap binaryBitmap=new BinaryBitmap(new HybridBinarizer
                                     (new BufferedImageLuminanceSource(image)));
-            HashMap hints=new HashMap();
-            hints.put(EncodeHintType.CHARACTER_SET,"utf-8");    //指定字符编码为“utf-8”
+            HashMap<DecodeHintType,Object> hints=new HashMap<>(4);
+            //指定字符编码为“utf-8”
+            hints.put(DecodeHintType.CHARACTER_SET,"utf-8");
             Result result=formatReader.decode(binaryBitmap,hints);
             return result.toString();
         } catch (Exception e) {

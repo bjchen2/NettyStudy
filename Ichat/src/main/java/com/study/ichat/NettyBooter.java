@@ -6,7 +6,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * 当项目启动成功后，启动Netty服务，初始化WebSocket
+ * 当项目启动成功后，自动启动Netty服务，初始化WebSocket
  * ContextRefreshedEvent ： ApplicationContext刷新事件（监听该事件一般用于项目初始化成功后进行相应逻辑处理）
  * @author Cx
  * @version jdk8 and idea On 2019/6/5 18:35

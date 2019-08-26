@@ -2,6 +2,7 @@ package com.study.ichat.pojo.vo;
 
 /**
  * 好友请求发送方的信息
+ * @author chenxiang
  */
 public class FriendRequestVO {
 	

@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import java.security.MessageDigest;
 
 /**
+ * MD5相关工具类
  * @author cxd27419
  */
 public class MD5Utils {

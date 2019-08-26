@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
+ * 好友请求类
  * @author cxd27419
  */
 @Table(name = "friends_request")
@@ -39,7 +40,7 @@ public class FriendsRequest {
     }
 
     /**
-     * @param id
+     * @param id 唯一标识
      */
     public void setId(String id) {
         this.id = id;

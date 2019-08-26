@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 /**
+ * 用户信息类
  * @author cxd27419
  */
 public class Users {

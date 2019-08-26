@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
+ * 消息类
  * @author cxd27419
  */
 @Table(name = "chat_msg")

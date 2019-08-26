@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * 好友类
  * @author cxd27419
  */
 @Table(name = "my_friends")
@@ -32,7 +33,7 @@ public class MyFriends {
     }
 
     /**
-     * @param id
+     * @param id 唯一标识
      */
     public void setId(String id) {
         this.id = id;
